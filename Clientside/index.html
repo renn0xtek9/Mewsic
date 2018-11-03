@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-
 <html>
 <head>
+    <script src="index_interaction.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Mewsic</title>
     <h1>Mewsic</h1>
+    <button name="settingsbutton" contextmenu="Change Mewsic Settings" title="Settings" onclick="window.location.href='/settings.html'">
+	Settings
+    </button>
     <sub>Enjoy your Music everywhere at home</sub>
-    
 </head>
 
-<body>
 
-Rest of the body
+
+<body>
+    
 </body>
 
 <footer>
-    <script src="index_interaction.js"></script>
     <h2>Currently playing</h2>
-    <button name="playbutton" contextmenu="Play/Pause music" title="Play/Pause music" onclick="playclicked()">
+    <button name="playbutton" contextmenu="Play" title="Play/Pause music" onclick="playclicked()">
         Play
     </button>
     <button name="nextbutton" contextmenu="Next Track music" title="Next">
         Next
+    </button>
+    <button name="pausbutton" contextmenu="Pause" title="Pause" onclick="pauseclicked()">
+    Pause
     </button>
     
 
