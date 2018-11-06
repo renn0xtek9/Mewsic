@@ -1,6 +1,7 @@
 var http = require('http');
 var url = require ('url');
 var fs = require('fs');
+var collection_manager = require("music_collection_management.js");
 var child_process = require('child_process');
 // var hostname = '127.0.0.1';
 var hostname = '192.168.0.12';
@@ -63,6 +64,8 @@ function AnalyzePostRequest(body) {
 				case 'pause':
 					Pause();
 					break;
+				case 'rescanwholecollection':
+					
 				default:
 					console.log('Command not yet implemented');
 			}
@@ -72,6 +75,15 @@ function AnalyzePostRequest(body) {
 		console.log("Request not understood");
 	}
 }
+function RescanWholeCollection(path){
+	try{
+		collection_manager.ScanCollection(path);
+	}
+	catch (e){
+		console.log('Error scanning collection: '+e);
+	}	
+}
+
 function Play() {
 	try{
 		subprocess.stdin.write("add /home/max/Music/Ed_Sheeran/Ed_Sheeran_-_Perfect_Duet_(with_Beyonce)_lyrics.mp3\n");		
