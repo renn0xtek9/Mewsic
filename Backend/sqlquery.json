@@ -1,0 +1,6 @@
+{"SQLQueries":
+	{"TestPresenceOfDatabase":"SELECT count(*) FROM information_schema.TABLES WHERE(TABLE_SCHEMA='mewsiccollection') AND (TABLE='tracks')",
+	"CreateDatabase":"CREATE DATABASE mewsiccollection",
+	"CreateTrackTable":"CREATE TABLE tracks ( ID INTEGER_PRIMARY KEY, title TEXT NOT NULL, artist TEXT, album TEXT, tracknumber INTEGER, duration INTEGR);"
+	}
+}

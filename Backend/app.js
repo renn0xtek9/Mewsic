@@ -1,10 +1,10 @@
 var http = require('http');
 var url = require ('url');
 var fs = require('fs');
-var collection_manager = require("music_collection_management.js");
+var collection_manager = require("./music_collection_management.js");
 var child_process = require('child_process');
 // var hostname = '127.0.0.1';
-var hostname = '192.168.0.12';
+var hostname = '127.0.0.1';
 var port = 3000;
 
 var subprocess = child_process.spawn('/usr/bin/vlc',['-I','rc'], {stdio: [
@@ -51,7 +51,12 @@ server.listen(port, hostname, () => {
 });
 
 function AnalyzePostRequest(body) {
-	var myobj=JSON.parse(body);
+	console.log(JSON.parse(body));
+ 	var myobj=JSON.parse(body);
+	
+// 	console.log(myobj['command']);
+	
+// 	console.log(Object.keys(myobj));
 	if ('command' in myobj)
 	{
 		if('type' in myobj['command'])
@@ -64,11 +69,16 @@ function AnalyzePostRequest(body) {
 				case 'pause':
 					Pause();
 					break;
-				case 'rescanwholecollection':
-					
+				case 'rescancollection':
+					console.log("Rescanning the whole colleciton from "+myobj['command']['path']);
+					RescanWholeCollection(myobj['command']['path']);
+					break;
 				default:
 					console.log('Command not yet implemented');
 			}
+		}
+		else {
+			console.log("Type of command not known");
 		}
 	}
 	else{
