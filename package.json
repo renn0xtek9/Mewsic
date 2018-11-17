@@ -1,0 +1,40 @@
+{
+  "name": "mewsic",
+  "version": "1.0.0",
+  "description": "A media player Web app based on Node Js",
+  "main": "Backend/app.js",
+  "dependencies": {
+    "mysql": "^2.16.0",
+    "node-id3": "^0.1.7",
+    "sqlite": "^3.0.0",
+    "sqlite3": "^4.0.4",
+    "walk": "^2.3.14"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-google": "^0.11.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "scripts": {
+    "test": "cd Backend && /usr/bin/node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renn0xtek9/Mewsic.git"
+  },
+  "keywords": [
+    "Music",
+    "Mediaplayer",
+    "mp3",
+    "multimedia",
+    "backend",
+    "webapp"
+  ],
+  "author": "Maxime Haselbauer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renn0xtek9/Mewsic/issues"
+  },
+  "homepage": "https://github.com/renn0xtek9/Mewsic#readme"
+}

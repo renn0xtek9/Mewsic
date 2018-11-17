@@ -5,7 +5,7 @@ do
 		continue
 	fi
 	echo $f
-	acorn --silent $f
+#	acorn --silent $f
 	
 	./node_modules/.bin/eslint $f.js
 	
