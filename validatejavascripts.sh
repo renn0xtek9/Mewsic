@@ -7,6 +7,6 @@ do
 	echo $f
 #	acorn --silent $f
 	
-	./node_modules/.bin/eslint $f.js
+	./node_modules/.bin/eslint $f
 	
 done 

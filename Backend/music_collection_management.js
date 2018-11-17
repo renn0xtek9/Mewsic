@@ -2,28 +2,8 @@ const fs = require('fs');
 const sq = require('sqlite3');
 const walk = require('walk');
 const NodeID3 = require('node-id3');
-const sqlqueries = JSON.parse(fs.readFileSync('sqlquery.json', 'utf8'));
 
-// var mysql = require('mysql');
-// var connection=mysql.createConnection({host:"localhost", user:"mewsic"});
-/*
-connection.connect(function(err){
-	if(err) throw err;
-	console.log("Connected to mysql");
-}); */
-module.exports = {
-  ScanCollection(path) {
-    CreateCollectionDatabase();
-    const filespaths = IndexTheWholePath(path);
-    console.log('Media files listed');
-    const songs = [];
-    for (filepath in filespaths) {
-      songs.append(new Song(filepath));
-    }
-    console.log('Media information extracted');
-    // TODO insert all song into the datasbase
-  },
-};
+const sqlqueries = JSON.parse(fs.readFileSync('sqlquery.json', 'utf8'));
 
 
 function CreateCollectionDatabase() {
@@ -48,53 +28,50 @@ class SongFile {
     this.title = '';
     this.artist = '';
     this.album = '';
-    this.tracknumber=0
+    this.tracknumber = 0;
     this.duration = 0.0;
-    var that=this;
-    var getinfofromid3=this.getInformationFormId3Tags();
-    getinfofromid3.then(function(result){
-	    that.title=result.title;
-	    that.artist=result.artist; 
-    },function(err){
-	    console.log("Problem with promise of id3tags");	    
-    })
+    const that = this;
+    const getinfofromid3 = this.getInformationFormId3Tags();
+    getinfofromid3.then((result) => {
+    that.title = result.title;
+    that.artist = result.artist;
+    }, (err) => {
+    console.log('Problem with promise of id3tags');
+    });
   }
+
   // /@function getInformationFormId3Tags()
   // /@brief get Id 3 Tag information from the media and populate class member.
   // /@return true, if Id3Tag have been retrieved, false otherwise
-  get ValuesForSQLInsertion(){
-	  return this.getValuesForSQLInsertion();
-  } 
-  getValuesForSQLInsertion(){
-	var list=[this.title,this.artist,this.album,this.duration,this.tracknumber];
-	var ret=''
-	for (var i=0;i<list.length;i++)
-	{
-		ret+='"'+list[i]+'"';
-		if (i<list.length-1)
-		{
-			ret+=",";
-		}
-	}
-	return ret;
-	  
+  get ValuesForSQLInsertion() {
+    return this.getValuesForSQLInsertion();
   }
-  
+
+  getValuesForSQLInsertion() {
+    const list = [this.title, this.artist, this.album, this.duration, this.tracknumber];
+    let ret = '';
+    for (let i = 0; i < list.length; i++) {
+      ret += `"${list[i]}"`;
+      if (i < list.length - 1) {
+        ret += ',';
+      }
+    }
+    return ret;
+  }
+
   async getInformationFormId3Tags() {
     try {
       console.log(`Reading tag for ${this.path}`);
       const file = this.path || new Buffer('Buffer for mp3 file');
-      
-      return new Promise(function(resolve,reject){
-	      let tags = NodeID3.read(file);
-	      try{
-		resolve(tags);
-	      }
-	      catch(e)
-	      {
-		reject (e);
-	      }  
-      })
+
+      return new Promise(((resolve, reject) => {
+        const tags = NodeID3.read(file);
+        try {
+            resolve(tags);
+        } catch (e) {
+            reject(e);
+        }
+      }));
     } catch (e) {
       console.log(`Error reading id3tags of ${this.path}`);
     }
@@ -108,17 +85,6 @@ function DoesDataBaseAlreadyExist() {
     return true;
   }
   return false;
-  /*
-	if (connection.connect){
-		connection.query(sqlqueries['SQLQueries']['TestPresenceOfDatabase'],function(err,result){
-			if(err) throw err;
-			console.log("Result: "+result);
-		});
-	}
-	else{
-		console.log("Can't check if database exist: not connected");
-		return false ;
-	} */
 }
 // /@function DeleteAllTablesFromTables
 // /@brief Delete all tables from the database
@@ -131,16 +97,6 @@ function DeleteAllTablesFromTables() {
 
 function CreateDatabase() {
   db = new sq.Database(`${__dirname}/musiccollection.db`);
-
-  /*
-	if (connection.connect){
-		connection.query(sqlqueries['SQLQueries'][''],function(err,result){
-			if(err) throw err;
-		});
-	}
-	else {
-		console.log("Can't create database: not connected");
-	} */
 }
 // /@function CreateTables
 // /@brief Create all required tables for the database
@@ -186,8 +142,23 @@ function IndexTheWholePath(path) {
 // / @param Songs a list of Song Objects that are to be insterted
 
 function InsertSongsInTheDatabase(Songs) {
-  for (var i=0; i<Songs.length;i++) {
-    var song=Songs[i];
-    db.run(sqlqueries.SQLQueries.InsertTrackIntoTrackTable+song.ValuesForSQLInsertion+");");
+  for (let i = 0; i < Songs.length; i++) {
+    const song = Songs[i];
+    db.run(`${sqlqueries.SQLQueries.InsertTrackIntoTrackTable + song.ValuesForSQLInsertion});`);
   }
 }
+
+module.exports = {
+  ScanCollection(path) {
+    var index;
+    CreateCollectionDatabase();
+    const filespaths = IndexTheWholePath(path);
+    console.log('Media files listed');
+    const songs = [];
+    for (index = 0; index < filespaths.length; index = index+1){
+      songs.append(new SongFile(filepaths[index]));
+    }
+    console.log('Media information extracted');
+    // TODO insert all song into the datasbase
+  },
+};
