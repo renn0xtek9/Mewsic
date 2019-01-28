@@ -24,7 +24,8 @@ function CreateCollectionDatabase() {
 class SongFile {
   constructor(path) {
     this.path = path;
-    // TODO at first extract the basename of the file form the full path and use it as a songname (if we don't get anythig better form id3tag, we will have this
+    // TODO at first extract the basename of the file form the full path and use it as a songname
+    // (if we don't get anythig better form id3tag, we will have this
     this.title = '';
     this.artist = '';
     this.album = '';
@@ -33,10 +34,10 @@ class SongFile {
     const that = this;
     const getinfofromid3 = this.getInformationFormId3Tags();
     getinfofromid3.then((result) => {
-    that.title = result.title;
-    that.artist = result.artist;
+      that.title = result.title;
+      that.artist = result.artist;
     }, (err) => {
-    console.log('Problem with promise of id3tags');
+      console.log('Problem with promise of id3tags');
     });
   }
 
@@ -50,7 +51,7 @@ class SongFile {
   getValuesForSQLInsertion() {
     const list = [this.title, this.artist, this.album, this.duration, this.tracknumber];
     let ret = '';
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i += 1) {
       ret += `"${list[i]}"`;
       if (i < list.length - 1) {
         ret += ',';
@@ -67,9 +68,9 @@ class SongFile {
       return new Promise(((resolve, reject) => {
         const tags = NodeID3.read(file);
         try {
-            resolve(tags);
+          resolve(tags);
         } catch (e) {
-            reject(e);
+          reject(e);
         }
       }));
     } catch (e) {
@@ -104,13 +105,23 @@ function CreateDatabase() {
 function CreateTables() {
   db.run(sqlqueries.SQLQueries.CreateTrackTable);
 }
+// /@function InsertSongsInTheDatabase
+// /@brief Insert a list of Songs Object into the database
+// / @param Songs a list of Song Objects that are to be insterted
+
+function InsertSongsInTheDatabase(Songs) {
+  for (let i = 0; i < Songs.length; i += 1) {
+    const song = Songs[i];
+    db.run(`${sqlqueries.SQLQueries.InsertTrackIntoTrackTable + song.ValuesForSQLInsertion});`);
+  }
+}
 
 // /@function IndexTheWholePath
 // /@brief This will list all the media file that are located under the given path
 // / @param path root path of the music collection
 
 function IndexTheWholePath(path) {
-// 	var walk    = require('walk');
+  // var walk    = require('walk');
   const Songs = [];
   console.log(`Now listing media files under ${path}`);
   if (!fs.existsSync(path)) {
@@ -135,28 +146,14 @@ function IndexTheWholePath(path) {
     InsertSongsInTheDatabase(Songs);
   });
 }
-
-
-// /@function InsertSongsInTheDatabase
-// /@brief Insert a list of Songs Object into the database
-// / @param Songs a list of Song Objects that are to be insterted
-
-function InsertSongsInTheDatabase(Songs) {
-  for (let i = 0; i < Songs.length; i++) {
-    const song = Songs[i];
-    db.run(`${sqlqueries.SQLQueries.InsertTrackIntoTrackTable + song.ValuesForSQLInsertion});`);
-  }
-}
-
 module.exports = {
   ScanCollection(path) {
-    var index;
     CreateCollectionDatabase();
     const filespaths = IndexTheWholePath(path);
     console.log('Media files listed');
     const songs = [];
-    for (index = 0; index < filespaths.length; index = index+1){
-      songs.append(new SongFile(filepaths[index]));
+    for (let index = 0; index < filespaths.length; index += 1) {
+      songs.append(new SongFile(filespaths[index]));
     }
     console.log('Media information extracted');
     // TODO insert all song into the datasbase
