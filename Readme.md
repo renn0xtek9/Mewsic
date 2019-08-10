@@ -2,6 +2,10 @@
 ## Status 
 Project is freshly started. Not to be actively used at the moment.
 
+## How-To
+1. Run the server: Launch ./launch.sh
+
+
 ## Goal
 ### Near term goal
 Mewsic is a music player written in NodeJs.
@@ -13,25 +17,24 @@ For this we will have native apps (in android).
 ### Long term goal 
 In long term Mewsic will be able to handle several play clients. That means that you can play different music in the living room and bathroom.
 
-
-
 ## Architecture
 Right now music is backend (server) in Node.Js.
 The client side (webpage) is an html5 with javascript page.
 The audio playback is ensure by starting vlc in headless mode with remote control capabilities (vlc -I rc). Right now this is sufficient. Later on we might need to
 
-
-
-## TODO 
-*a lot...* 
+## Development 
+### TODO 
+[x] Make a mini music collection for testing purpose
+[ ] Ensure the table "tracks" is created before listing all the files and trying to insert them into the table
+[ ] Finish a minimalist frontend 
 
 
 ### Urgent (usability hindering)
 * Implement settings page where users will save settings regarding music collection
-	* Path of music
-	* Let the user change the port
-* Implement a scan of all the collection 
-* Ensure that mysql server is started at start-up of Mewsic
+~~	* Path of music~~
+~~	* Let the user change the port~~
+~~* Implement a scan of all the collection ~~
+~~* Ensure that mysql server is started at start-up of Mewsic~~
 * Implement search of music in the collection
 
 

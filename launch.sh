@@ -2,7 +2,7 @@
 cd Backend 
 if [ "$1" == "Debug" ]
 then 
-	/usr/bin/node --inspect-brk app.js 
+	/usr/bin/nodejs --inspect-brk app.js 
 else 
-	/usr/bin/node app.js
+	/usr/bin/nodejs app.js
 fi
