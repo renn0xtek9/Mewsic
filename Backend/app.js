@@ -1,13 +1,13 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const child_process = require('child_process');
-const collection_manager = require('./music_collection_management.js');
+const childProcess = require('child_process');
+const collectionManager = require('./music_collection_management.js');
 // var hostname = '127.0.0.1';
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const subprocess = child_process.spawn('/usr/bin/vlc', ['-I', 'rc'], {
+const subprocess = childProcess.spawn('/usr/bin/vlc', ['-I', 'rc'], {
   stdio: [
     'pipe', // Use parent's stdin for child
     'pipe', // Pipe child's stdout to parent
@@ -19,7 +19,7 @@ subprocess.stdin.setEncoding('utf-8');
 
 function RescanWholeCollection(path) {
   try {
-    collection_manager.ScanCollection(path);
+    collectionManager.ScanCollection(path);
   } catch (e) {
     console.log(`Error scanning collection: ${e}`);
   }
