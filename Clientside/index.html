@@ -1,42 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset=UTF-8">
+    <link rel="stylesheet" href="/styles.css">
     <script src="index_interaction.js"></script>
     <title>Mewsic</title>
-    <h1>Mewsic</h1>
-    <button name="settingsbutton" contextmenu="Change Mewsic Settings" title="Settings" onclick="window.location.href='/settings.html'">
-	Settings
-    </button>
-    <sub>Enjoy your Music everywhere at home</sub>
 </head>
 
 
 
 <body>
-<h1>Playlist</h1>
-<table>
-<tr>
-<td>Title</td>
-<td>Artist</td>
-</tr>
-</table>
+    <header
+           <div id="header">
+           <h1>Mewsic</h1>                         
+           </div>
+           <div id="navigation">
+            <button name="settingsbutton" contextmenu="Change Mewsic Settings" title="Settings" onclick="window.location.href='/settings.html'">
+                Settings
+            </button>
+            <button name="devicesbutton" contextmenu="Manage you devices pages" title="Devices" onclick="">Devices</button>            
+           </div>
+
+
+<br>
+<sub>Enjoy your Music everywhere</sub>
+</header>
+
 
 </body>
+<aside id="sidebar">
+    <h2>Playing Queue</h2>
+    <li>Title 1</li>
+    <li>Title 2</li>    
+</aside>
+<article>
+    <h2>Playlist</h2>
+    <table>
+    <tr>
+    <td>Title</td>
+    <td>Artist</td>
+    </tr>
+    </table>    
+</article>
 
-<footer>
+<div id="footer">
     <h2>Currently playing</h2>
     <button name="playbutton" contextmenu="Play" title="Play/Pause music" onclick="playclicked()">
         Play
     </button>
-    <button name="nextbutton" contextmenu="Next Track music" title="Next">
+    <button name="nextbutton" contextmenu="Next music track" title="Next">
         Next
     </button>
-    <button name="pausbutton" contextmenu="Pause" title="Pause" onclick="pauseclicked()">
+    <button name="prevbutton" contextmenu="Previous music track" title="Prev">
+        Previous
+    </button>
+    <button name="pausbutton" contextmenu="Pause" title="Pause" onclick="pauseclicked();">
     Pause
     </button>
+    <p>
+    <input type="range" name="playcursor" wef />
+    </p>
+    
+    
     
 
     
-</footer>
+</div>
 </html>
